@@ -1,50 +1,17 @@
-import React, { ChangeEvent } from 'react';
-import {
-  atom,
-  RecoilState,
-  selector,
-  useRecoilState,
-  useRecoilValue
-} from 'recoil';
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import EchoText from './pages/EchoText';
+import Home from './pages/Home';
 
-const textState: RecoilState<string> = atom({
-  key: 'textState',
-  default: ''
-});
-const charCountState = selector({
-  key: 'charCountState', // unique ID (with respect to other atoms/selectors)
-  get: ({ get }) => {
-    const text = get(textState);
-    return text.length;
-  }
-});
-function App() {
+export default function App() {
   return (
-    <div>
-      <TextInput />
-      <CharacterCount />
+    <div style={{ padding: '10px' }}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/echo" element={<EchoText />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
-
-function TextInput() {
-  const [text, setText] = useRecoilState(textState);
-  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setText(event.target.value);
-  };
-
-  return (
-    <div>
-      <input type="text" value={text} onChange={onChange} />
-      <br />
-      Echo: {text}
-    </div>
-  );
-}
-
-function CharacterCount() {
-  const count = useRecoilValue(charCountState);
-
-  return <div>Character Count: {count}</div>;
-}
-export default App;
