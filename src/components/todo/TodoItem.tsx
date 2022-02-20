@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRecoilState } from 'recoil';
-import { todoListAtom } from 'atoms/todo-atom';
+import { todoListAtom } from 'store/atoms/todo-atom';
 import { TodosGetPayload, TodosGetPayloadItem } from 'types/todo';
 
 interface TodoItemProps {
